@@ -6,17 +6,17 @@ public class Cat extends Animal
 {
     private int numLives;
 
-    public Cat(String name, Integer lives)
+    public Cat(String name)
     {
         super(name);
-        this.numLives = lives;
+        numLives = 9;
     }
 
     public Integer getNumLives() {
         return numLives;
     }
 
-    public void setName(Integer n) {
+    public void setNumLives(Integer n) {
         this.numLives = n;
     }
     

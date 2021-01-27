@@ -8,7 +8,7 @@ public class Main
 
         Animal misty = new Dog("Misty");
 
-        Animal topCat = new Cat("TopCat", 8);
+        Animal topCat = new Cat("TopCat");
 
         System.out.println(misty);
         System.out.println(topCat);
@@ -20,7 +20,7 @@ public class Main
         System.out.println(misty);
         System.out.println(topCat);
 
-        Cat ginger = new Cat("Ginger", 8);
+        Cat ginger = new Cat("Ginger");
         System.out.println(ginger);
 
         while(ginger.getNumLives() > 0) {
