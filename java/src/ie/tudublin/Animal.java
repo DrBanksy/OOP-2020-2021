@@ -2,14 +2,14 @@ package ie.tudublin;
 
 public class Animal
 {
+    private String name;
 
     public String toString()
     {
         return name;
     }
 
-    private String name;
-
+    
     public String getName()
     {
         return name;
@@ -22,6 +22,7 @@ public class Animal
 
     public Animal(String name)
     {
+
         this.name = name;
     }
 }
