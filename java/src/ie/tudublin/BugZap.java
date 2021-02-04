@@ -66,8 +66,9 @@ public class BugZap extends PApplet {
 		}
 	}	
 
-	void drawBug(float x, float y, float w) {
-		triangle()
+	void drawBug(float x, float y) {
+		// System.out.println(x);
+		triangle(x, y, x - 10, y + 20, x + 10, y+ 20 );
 	}
 
 
@@ -76,7 +77,8 @@ public class BugZap extends PApplet {
 		background(0);
 		fill(255);
 		drawPlayer(playerX, playerY, playerWidth);
-		drawBug(bugX, bugY, bugWidth);
+		System.out.println(bugX);
+		drawBug(bugX, bugY);
 		text("Score: " + score, 20, 20);
 	}
 }
