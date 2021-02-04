@@ -16,16 +16,32 @@ public class BugZap extends PApplet {
 	float playerWidth = 40;
 	float halfPlayerWidth = playerWidth / 2;
 
-	float bugX, bugY, bugWidth = 30;
-	float halfBugWidth = bugWidth / 2;
+	float bugX, bugY, bugWidth;
+	float halfBugWidth = 20 + (bugWidth / 2);
 
 	int score = 0;
 
 	void reset() {
 		playerX = width / 2;
 		playerY = height - 50;
+		resetBug();
 	}
 
+	void resetBug() {
+		bugX = random(halfBugWidth, width - halfBugWidth);
+		bugY = 50;
+		System.out.println("test");
+	}
+
+	void moveBug() {
+		if((frameCount % 30) == 0) {
+			bugX += random(-5, +5);
+			if(bugX < halfBugWidth) {
+				bugX = halfBugWidth;
+			}
+
+		}
+	}
 	
 
 	void drawPlayer(float x, float y, float w) {
@@ -68,7 +84,15 @@ public class BugZap extends PApplet {
 
 	void drawBug(float x, float y) {
 		// System.out.println(x);
-		triangle(x, y, x - 10, y + 20, x + 10, y+ 20 );
+		stroke(255);
+		noFill();
+		triangle(x, y, x - 15, y + 25, x + 15, y+ 25 );
+		noStroke();
+		fill(255);
+		ellipse(x + 2, y + 15, 2, 2);
+		ellipse(x - 2, y + 15, 2, 2);
+		stroke(255);
+		line(x - 5 , y+20, x+ 5, y+20);
 	}
 
 
@@ -77,8 +101,9 @@ public class BugZap extends PApplet {
 		background(0);
 		fill(255);
 		drawPlayer(playerX, playerY, playerWidth);
-		System.out.println(bugX);
 		drawBug(bugX, bugY);
+		moveBug();
+		System.out.println(bugWidth);
 		text("Score: " + score, 20, 20);
 	}
 }
