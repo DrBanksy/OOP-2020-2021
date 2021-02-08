@@ -16,8 +16,9 @@ public class BugZap extends PApplet {
 	float playerWidth = 40;
 	float halfPlayerWidth = playerWidth / 2;
 
-	float bugX, bugY, bugWidth;
-	float halfBugWidth = 20 + (bugWidth / 2);
+	float bugX, bugY;
+	float bugWidth = 30;
+	float halfBugWidth = bugWidth / 2;
 
 	int score = 0;
 
@@ -35,9 +36,19 @@ public class BugZap extends PApplet {
 
 	void moveBug() {
 		if((frameCount % 30) == 0) {
-			bugX += random(-5, +5);
+			bugX += random(-80, +80);
 			if(bugX < halfBugWidth) {
 				bugX = halfBugWidth;
+			}
+
+			if(bugX + halfBugWidth > width) {
+				bugX = width - halfBugWidth;
+			} 
+			bugY+=15;
+
+			System.out.println(playerY - (playerWidth/2 * 0.3f));
+			if(bugY > 420 ) {
+				exit();
 			}
 
 		}
@@ -103,7 +114,7 @@ public class BugZap extends PApplet {
 		drawPlayer(playerX, playerY, playerWidth);
 		drawBug(bugX, bugY);
 		moveBug();
-		System.out.println(bugWidth);
+		//System.out.println(bugWidth);
 		text("Score: " + score, 20, 20);
 	}
 }
