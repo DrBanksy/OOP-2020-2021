@@ -1,6 +1,7 @@
 package ie.tudublin;
 
 import processing.core.PApplet;
+import java.util.Random;
 
 public class Loops extends PApplet {
 
@@ -194,27 +195,100 @@ public class Loops extends PApplet {
                 break;
             }
 
+            // case 9: 
+            // {
+            //     int sides = (mouseX / 50);
+            //     float theta = TWO_PI / (float) sides;
+            //     System.out.println(theta);
+            //     float radius = 200;
+            //     stroke(255);
+            //     for(int i = 1 ; i <= sides ; i ++)
+            //     {
+            //         float x1 = sin(theta * (i - 1)) * radius;
+            //         float y1 = cos(theta * (i - 1)) * radius;
+            //         float x2 = sin(theta * i) * radius;
+            //         float y2 = cos(theta * i) * radius;
+            //         line(cx + x1, cy + y1, cx + x2, cy + y2);
+            //     }
+            // }
+
+            // case 9:
+            // {
+            //     float gap = width * 0.1f;
+            //     float halfGap = gap / 2.0f;
+            //     colorMode(RGB);
+            //     stroke(0, 255, 0);
+            //     textAlign(CENTER, CENTER);
+            //     for(int i = -5 ; i <=5 ; i ++)
+            //     {
+            //         float x = map(i, -5, 5, gap, width - gap);				
+            //         line(x, gap, x, height - gap);
+            //         line(gap, x, width - gap, x);
+            //         fill(255);
+            //         text(i, x, halfGap);
+            //         text(i, halfGap, x);
+                    
+            //     }
+            // }
+
+            // case 9 :
+            // {
+                
+            //     int numOfSquares = (int) mouseX /10;
+            //     float w = width / (float) numOfSquares;
+            //     colorMode(HSB);
+            //     fill(190, 255, 255);
+            //     rect(cx, cy, 100, 100);
+
+
+            //     for(int i = 0 ; i < numOfSquares ; i++ ) {
+            //         for(int j = 0 ; j < numOfSquares; j++) {
+            //             if((j + i) % 2 == 0) {
+            //                 fill(190, 255, 255);
+            //             } else {
+            //                 fill(190, 255, 100);
+            //             }
+            //             rect(w * j, w * i, w, w);
+            //         }
+            //     }
+                
+            // }
+
             case 9: 
             {
-                int sides = (mouseX / 50);
-                float theta = TWO_PI / (float) sides;
-                float radius1 = 5;
-                float radius2 = 70;
-                for(int i = 1 ; i <=sides ; i++) {
-                    float x1 = sin(theta + (i-1)) * radius2;
-                    float y1 = cos(theta + (i-1)) * radius2;
-                    float x2 = sin(theta + i) * radius1;
-                    float y2 = cos(theta * i) * radius1;
-                    stroke(255);
-                    line(cx + x1, cx + y1, cx + x2, cx + y2);
+                
+                Random rand = new Random();
+                int upperbound = 400;
 
-                }
+                drawStar(cx, cy, 30, 100, 5);
+                drawStar(200, 250, 30, 100, 40);
+                drawStar(100, 150, 30, 100, 10);
+                
+
             }
             
             
                 
 
         }
+    }
+
+    public void drawStar(float x, float y, float radius1, float radius2, int npoints) {
+        float angle = TWO_PI / npoints;
+        float halfAngle = angle / (float)2.0;
+        colorMode(HSB);
+        beginShape();
+        for(float a = 0; a < TWO_PI ; a += angle) {
+            stroke(255);
+            fill(255, 255, 255);
+            float sx = x + cos(a) * radius2;
+            float sy = y + sin(a) * radius2;
+            vertex(sx, sy);
+            sx = x + cos(a+halfAngle) * radius1;
+            sy = y + sin(a+halfAngle) * radius1;
+            vertex(sx, sy);
+        }
+        endShape();      
     }
 
     
