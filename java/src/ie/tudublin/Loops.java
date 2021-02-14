@@ -8,13 +8,19 @@ public class Loops extends PApplet {
     public void settings() {
         size(500, 500);
         cx = width / 2;
-        cy = height / 2;        
+        cy = height / 2;  
+        angle = 0; 
+        vel = 0;
+        acc = 0;     
     }
 
     int mode = 0;
 
     float cx;
     float cy;
+    float angle;
+    float vel;
+    float acc;
 
     public void keyPressed() {
         // the value of mode will be the number of the 
@@ -180,20 +186,20 @@ public class Loops extends PApplet {
             }
                 
             
-            case 8:
-            {
-                int numCircles = (int) mouseX / 10;
-                float cgap = 255 / (float) numCircles;
-                float gap = width / (float) numCircles;
-                float w = width;
-                for( int i = 0 ; i < numCircles ; i++) {
-                    fill(i * cgap, 255, 255);
-                    ellipse(cx, cy, w, w);
-                    w-=gap;
-                }
+            // case 8:
+            // {
+            //     int numCircles = (int) mouseX / 10;
+            //     float cgap = 255 / (float) numCircles;
+            //     float gap = width / (float) numCircles;
+            //     float w = width;
+            //     for( int i = 0 ; i < numCircles ; i++) {
+            //         fill(i * cgap, 255, 255);
+            //         ellipse(cx, cy, w, w);
+            //         w-=gap;
+            //     }
 
-                break;
-            }
+            //     break;
+            // }
 
             // case 9: 
             // {
@@ -212,24 +218,25 @@ public class Loops extends PApplet {
             //     }
             // }
 
-            // case 9:
-            // {
-            //     float gap = width * 0.1f;
-            //     float halfGap = gap / 2.0f;
-            //     colorMode(RGB);
-            //     stroke(0, 255, 0);
-            //     textAlign(CENTER, CENTER);
-            //     for(int i = -5 ; i <=5 ; i ++)
-            //     {
-            //         float x = map(i, -5, 5, gap, width - gap);				
-            //         line(x, gap, x, height - gap);
-            //         line(gap, x, width - gap, x);
-            //         fill(255);
-            //         text(i, x, halfGap);
-            //         text(i, halfGap, x);
+            case 8:
+            {
+                float gap = width * 0.1f;
+                float halfGap = gap / 2.0f;
+                colorMode(RGB);
+                stroke(0, 255, 0);
+                textAlign(CENTER, CENTER);
+                for(int i = -5 ; i <=5 ; i ++)
+                {
+                    float x = map(i, -5, 5, gap, width - gap);				
+                    line(x, gap, x, height - gap);
+                    line(gap, x, width - gap, x);
+                    fill(255);
+                    text(i, x, halfGap);
+                    text(i, halfGap, x);
                     
-            //     }
-            // }
+                }
+                break;
+            }
 
             // case 9 :
             // {
@@ -254,25 +261,42 @@ public class Loops extends PApplet {
                 
             // }
 
-            case 9: 
-            {
+            // case 9: 
+            // {
                 
-                Random rand = new Random();
-                int upperbound = 400;
+            //     Random rand = new Random();
+            //     int upperbound = 400;
 
-                drawStar(cx, cy, 30, 100, 5);
-                drawStar(200, 250, 30, 100, 40);
-                drawStar(100, 150, 30, 100, 10);
+            //     drawStar(cx, cy, 30, 100, 5);
+            //     drawStar(200, 250, 30, 100, 40);
+            //     drawStar(100, 150, 30, 100, 10);
                 
 
-            }
+            // }
+            
+            // case 9:
+            // {
+            //     acc = (float)0.01;
+            //     acc = map((float)mouseX, (float)0, (float)width, (float)-0.01,(float) 0.01);
+            //     noStroke();
+            //     fill(240, 99, 164);
+            //     rectMode(CENTER);
+            //     translate(250, 250);
+            //     rotate(angle);
+            //     // rect(0, 0, 130, 60);
+            //     drawStar(0, 0, 30, 70, 5);
+            //     angle += vel;
+            //     vel += acc;
+                
+            //     break;
+            // }
             
             
                 
 
         }
     }
-
+    
     public void drawStar(float x, float y, float radius1, float radius2, int npoints) {
         float angle = TWO_PI / npoints;
         float halfAngle = angle / (float)2.0;
@@ -290,6 +314,40 @@ public class Loops extends PApplet {
         }
         endShape();      
     }
+
+    public void drawLineGraph() {
+        float border = width * 0.1f;
+        stroke(255);
+        line(border, border, border, height - border);
+        for(int i = 0 ; i <= 150 ; i+=10 ){
+            float y = map(i, 0, 150, height - border, border);
+            line(border, y, border -5, y );
+            text(i, border/2, y);
+        }
+        line(border, height - border, width - border, height - border);
+    }
+
+    public void drawGrid() {
+        float y = 0;
+        float x = 0;
+        float spacing = 50;
+
+        stroke(255);
+        strokeWeight(2);
+
+        x = 0;
+        while(x < width) {
+            line(x, 0, x, height);
+            x += spacing;
+        }
+
+        y = 0;
+        while(y < height) {
+            line(0, y, width, y);
+            y+=spacing;
+        }
+    }
+    
 
     
 
