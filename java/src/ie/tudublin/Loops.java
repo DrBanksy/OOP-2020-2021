@@ -1,6 +1,8 @@
 package ie.tudublin;
 
 import processing.core.PApplet;
+
+import java.sql.Time;
 import java.util.Random;
 
 public class Loops extends PApplet {
@@ -9,6 +11,7 @@ public class Loops extends PApplet {
         size(500, 500);
         cx = width / 2;
         cy = height / 2;  
+        time = millis();
         angle = 0; 
         vel = 0;
         acc = 0;     
@@ -16,6 +19,7 @@ public class Loops extends PApplet {
 
     int mode = 0;
 
+    int time;
     float cx;
     float cy;
     float angle;
@@ -234,6 +238,25 @@ public class Loops extends PApplet {
                     text(i, x, halfGap);
                     text(i, halfGap, x);
                     
+                }
+                break;
+            }
+
+            // ********* cool lines *********
+            // ********* useful for project *********
+            
+            case 9:
+            {
+                float numLines = mouseX;
+                float w = width / numLines;
+                float colorGap = 255 / (float) numLines;
+                float border = width * 0.05f;
+                colorMode(HSB);
+                strokeWeight(4);
+                smooth();
+                for(int i = 0; i < numLines; i++) {
+                        stroke((i * colorGap) % 255 , 255, 255);
+                        line(border, border * w, width - border, border * i);
                 }
                 break;
             }
