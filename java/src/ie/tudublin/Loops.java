@@ -257,7 +257,7 @@ public class Loops extends PApplet {
                 float colorGap = 255 / (float) numLines;
                 float border = width * 0.05f;
                 colorMode(HSB);
-                strokeWeight(2);
+                strokeWeight(3);
                 smooth();
                 for(int i = 0; i < numLines; i++) {
                         stroke((i * colorGap) % 255 , 255, alpha);
