@@ -131,28 +131,104 @@ public class Arrays extends PApplet {
             }
             case 1: {
                 // Trend line
+                drawTrendLine(rainfall, months);
+                break;
             }
             case 2: {
                 // Pie chart
+                drawPieChart(rainfall, months);
+                break;
             }
         }
     }
 
     public void drawChart(float[] rainfall, String[] months) {
-        float border = width * .05f;
+        float border = width * .08f;
         float w = width / (float) rainfall.length;
         textAlign(CENTER, CENTER);
+        float cgap = 255 / (float) rainfall.length;
         for( int i = 0 ; i < 120; i+=10) {
-            colorMode(HSB);
             float x = map(i, 0, 120, border, width - border);
             float rainValue = map(-rainfall[i/10], 0, 120, border, width - border);
-            stroke(120, 255, 255);
-            line(x, border, x, height - border);
-            line(border, x, width - border, x);
+            noStroke();
             fill(255);
             text(months[i/10], x, height - (border * 0.5f));
             text(i, border * 0.5f, height - x);
-            rect(x, height - border, w * 0.9f, rainValue);
+            fill(cgap * i/10, 255, 255);
+            stroke(255);
+            line(border - 5, x, border, x);
+            rect(x, height - border, w * 0.9f, rainValue - border);
+        }
+        float x1 = map(0, 0, 120, border, width - border);
+        fill(255);
+        text(0, border * 0.5f, height - x1);
+        stroke(255);
+        strokeWeight(2);
+        line(x1, border, x1, height - border);
+    }
+
+    public void drawTrendLine(float[] rainfall, String months[]){
+        float border = width * .08f;
+        float w = width / (float) rainfall.length;
+        textAlign(CENTER, CENTER);
+        float cgap = 255 / (float) rainfall.length;
+        float l = map(0*10, 0, 120, border, width - border);
+        stroke(255);
+        line(l, border, l, height - border);
+        line(l, height-border, width-border, height-border);
+
+        //setting the markers and numbers
+        for(int i = 0; i <= 12; i++) {
+            float x = map(i*10, 0, 120, border, width - border);
+            stroke(255);
+            line(border - 5, height -x, border, height - x);
+            text(i*10, border * 0.5f, height - x);
+        }
+
+        //setting the months and the markers
+        for(int i = 0 ; i < months.length ; i ++)
+		{
+			float x = map(i, 0, months.length - 1, border, width - border);
+			line(x, height - border, x, height - (border + 5));
+			text(months[i], x, height - border * 0.5f);
+		}
+
+        for(int i = 0; i < months.length - 1; i++) {
+            stroke(i*cgap, 255, 255);
+            float x1 = map(i, 0, months.length - 1, border, width-border);
+            float x2 = map(i+1, 0, months.length -1, border, width-border);
+
+            float y1 = map(rainfall[i], 0, 120, height - border,border);
+            float y2 = map(rainfall[i+1], 0, 120, height - border,border);
+            
+            line(x1, y1, x2, y2);
+        }
+        
+    }
+
+    public void drawPieChart(float[] rainfall, String[] months) {
+        float runningSum = 0;
+        float total = 0;
+        float cx = width/2;
+        float cy = height/2;
+        float w = width *0.8f;
+
+        for(int i = 0; i < rainfall.length; i++) {
+            total += rainfall[i];
+        }
+
+        float cgap = 255 / (float) rainfall.length;
+        for(int i = 0; i < months.length; i++) {
+            fill(i*cgap, 255, 255);
+            float next = runningSum + rainfall[i];
+            float start = map(runningSum, 0, total, 0, TWO_PI);
+            float end = map(next, 0, total, 0, TWO_PI);
+            arc(cx, cy, w, w, start, end, ARC);
+            runningSum = next;
+            fill(255);
+            System.out.println(runningSum);
+            text(months[i], cos(start), sin(end) );
+            
         }
     }
 
