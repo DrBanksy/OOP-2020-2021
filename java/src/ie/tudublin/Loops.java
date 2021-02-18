@@ -11,15 +11,18 @@ public class Loops extends PApplet {
         size(500, 500);
         cx = width / 2;
         cy = height / 2;  
-        time = millis();
+        alpha = 1;
+        delta =1;
         angle = 0; 
         vel = 0;
         acc = 0;     
     }
 
     int mode = 0;
-
+    int alpha;
+    int delta;
     int time;
+    boolean fade;
     float cx;
     float cy;
     float angle;
@@ -35,6 +38,8 @@ public class Loops extends PApplet {
 
     public void setup() {
         colorMode(HSB);
+        smooth();
+        fade = false;
     }
 
     float offset = 0;
@@ -247,16 +252,18 @@ public class Loops extends PApplet {
             
             case 9:
             {
-                float numLines = mouseX;
+                float numLines = 10;
                 float w = width / numLines;
                 float colorGap = 255 / (float) numLines;
                 float border = width * 0.05f;
                 colorMode(HSB);
-                strokeWeight(4);
+                strokeWeight(2);
                 smooth();
                 for(int i = 0; i < numLines; i++) {
-                        stroke((i * colorGap) % 255 , 255, 255);
-                        line(border, border * w, width - border, border * i);
+                        stroke((i * colorGap) % 255 , 255, alpha);
+                        line(border, cy + cy/2, width, border * i);
+                        twinkle(); 
+                        
                 }
                 break;
             }
@@ -319,6 +326,14 @@ public class Loops extends PApplet {
 
         }
     }
+
+    void twinkle() {
+        //fade in and out
+       if (alpha == 0 || alpha == 255) {
+          delta= -delta;
+        }
+        alpha += delta;
+      } 
     
     public void drawStar(float x, float y, float radius1, float radius2, int npoints) {
         float angle = TWO_PI / npoints;
