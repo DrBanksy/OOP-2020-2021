@@ -70,7 +70,7 @@ public class Life extends PApplet {
     {
         if (row >= 0 && row < size -1 && col >= 0 && col < size -1)
         {
-            board[row][col] = b;
+            next[row][col] = b;
         }
     }
 
@@ -212,15 +212,22 @@ public class Life extends PApplet {
             for(int col = 0; col < size ; col++) {
                 if(getCell(board, row, col)) {
                     if(countNeighbours(row, col) == 2 || countNeighbours(row, col) == 3) {
-                        next[row][col] = true;
+                        // next[row][col] = true;
+                        setCell(next, row, col, true);
                     } else {
-                        next[row][col] = false;
+                        // next[row][col] = false;
+                        setCell(next, row, col, false);
+
                     }
                 } else {
                     if(countNeighbours(row, col) == 3) {
-                        next[row][col] = true;
+                        // next[row][col] = true;
+                        setCell(next, row, col, true);
+
                     } else {
-                        next[row][col] = false;
+                        // next[row][col] = false;
+                        setCell(next, row, col, false);
+
                     }
                 }
             }
@@ -236,6 +243,33 @@ public class Life extends PApplet {
     public void mouseDragged()
     {
         // This method gets called automatically when the mouse is dragged across the screen
+        int col = (int) (map(pmouseX, 0, width, 0, size-1)) % size;
+        int row = (int) (map(pmouseY, 0, height, 0, size-1)) % size;        
+
+        board[row][col] = true;
+
+        col = (int) (map(mouseX, 0, width, 0, size-1)) % size;
+        row = (int) (map(mouseY, 0, height, 0, size-1)) % size;
+
+        println("col-> " + col);
+        println("row->" + row);
+
+
+        board[row][col] = true;
+
+
+         
+        // for (int col = 0 ; col < size ; col ++)
+        // {
+        //     float x = map(size / 2, 0, size, 0, width);
+        //     int x1 = (int)x;
+        //     float y = map(pos, 0, size, 0, height);
+        //     fill(50, 255 , 255);
+        //     board[x1][col] = true;
+        //     rect(x, y, cellSize, cellSize);
+        // }
+   
+
     }
 
     public void draw() {
