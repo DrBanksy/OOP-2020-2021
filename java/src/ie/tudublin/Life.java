@@ -86,6 +86,7 @@ public class Life extends PApplet {
         }        
     }
 
+    float offset = 0;
     public void drawBoard(boolean[][] board)
     {
         // Use a nested loop
@@ -93,14 +94,20 @@ public class Life extends PApplet {
         // Rect draw the cell
         // Use the cell size variable
         // Use some colours!
+        float cGap = 255 / (float)size;
+        offset += (mouseX / 100);
+        colorMode(HSB);
         for(int row = 0 ; row < size ; row ++)
         {
             for (int col = 0 ; col < size ; col ++)
             {
+                // float ran = random(3.0f, (float)cellSize * 2);
                 float x = map(col, 0, size, 0, width);
                 float y = map(row, 0, size, 0, height);
                 if (board[row][col])
                 {
+                    float c = ((cGap * (row + col)) + offset) % 255;
+                    fill(c, 255 , 255);
                     rect(x, y, cellSize, cellSize);
                 }
             }
@@ -156,14 +163,28 @@ public class Life extends PApplet {
         
         if (keyCode == '1')
         {
+            randomize();
         }
         if (keyCode == '2')
         {
+            clearBoard(board);
         }
         if (keyCode == '3')
         {
         }
             
+    }
+    
+ 
+
+    void clearBoard(boolean[][] board) {
+        for(int row = 0 ; row < size ; row ++)
+        {
+            for (int col = 0 ; col < size ; col ++)
+            {
+                board[row][col] = false;
+            }
+        }   
     }
 
     public void setup() {
@@ -184,7 +205,26 @@ public class Life extends PApplet {
 
     private void updateBoard()
     {
+        float cGap = 255 / (float) size;
+        colorMode(HSB);
         // Put code here to apply the rules!!
+        for(int row = 0; row < size; row++) {
+            for(int col = 0; col < size ; col++) {
+                if(getCell(board, row, col)) {
+                    if(countNeighbours(row, col) == 2 || countNeighbours(row, col) == 3) {
+                        next[row][col] = true;
+                    } else {
+                        next[row][col] = false;
+                    }
+                } else {
+                    if(countNeighbours(row, col) == 3) {
+                        next[row][col] = true;
+                    } else {
+                        next[row][col] = false;
+                    }
+                }
+            }
+        }
 
         
         // Swap board and next
@@ -199,8 +239,9 @@ public class Life extends PApplet {
     }
 
     public void draw() {
+        frameRate(10);
         background(0);
-        drawBoard(board);        
+        drawBoard(board);
         updateBoard();
     }
 }
