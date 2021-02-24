@@ -70,7 +70,7 @@ public class Life extends PApplet {
     {
         if (row >= 0 && row < size -1 && col >= 0 && col < size -1)
         {
-            next[row][col] = b;
+            board[row][col] = b;
         }
     }
 
@@ -210,23 +210,24 @@ public class Life extends PApplet {
         // Put code here to apply the rules!!
         for(int row = 0; row < size; row++) {
             for(int col = 0; col < size ; col++) {
+                int neighBours = countNeighbours(row, col);
                 if(getCell(board, row, col)) {
-                    if(countNeighbours(row, col) == 2 || countNeighbours(row, col) == 3) {
-                        // next[row][col] = true;
-                        setCell(next, row, col, true);
+                    if(neighBours == 2 || neighBours == 3) {
+                        next[row][col] = true;
+                        // setCell(next, row, col, true);
                     } else {
-                        // next[row][col] = false;
-                        setCell(next, row, col, false);
+                        next[row][col] = false;
+                        // setCell(next, row, col, false);
 
                     }
                 } else {
-                    if(countNeighbours(row, col) == 3) {
-                        // next[row][col] = true;
-                        setCell(next, row, col, true);
+                    if(neighBours == 3) {
+                        next[row][col] = true;
+                        // setCell(next, row, col, true);
 
                     } else {
-                        // next[row][col] = false;
-                        setCell(next, row, col, false);
+                        next[row][col] = false;
+                        // setCell(next, row, col, false);
 
                     }
                 }
