@@ -263,13 +263,14 @@ public class Life extends PApplet {
         }
     }
 
+    //assignment
     void drawTwoLines(boolean[][] board) {
         for(int i = 0; i < size;i++) {
             setCell(board, i, size - 60, true);
             setCell(board, i, size - 40, true);
         } 
     }
-
+    //assignment
     void drawX(boolean[][] board){
         for(int i = 1; i <= size; i++) {
             setCell(board, i, i, true);
