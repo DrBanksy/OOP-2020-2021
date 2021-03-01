@@ -159,7 +159,14 @@ public class Life extends PApplet {
     public void keyPressed() {
         if (keyCode == ' ')
         {
-        }
+            paused = !paused;
+            if(paused) {
+                noLoop();
+            } else{
+                loop();
+            }
+
+        } 
         
         if (keyCode == '1')
         {
@@ -171,7 +178,15 @@ public class Life extends PApplet {
         }
         if (keyCode == '3')
         {
+            drawCross(board);
         }
+        if(keyCode == '4') {
+            drawTwoLines(board);
+        }
+        if(keyCode == '5') {
+            drawX(board);
+        }
+
             
     }
     
@@ -241,6 +256,27 @@ public class Life extends PApplet {
         next = temp;
     }
 
+    void drawCross(boolean[][] board) {
+        for(int i = 0; i < size; i++) {
+            setCell(board, size/2, i, true);
+            setCell(board, i, size/2, true);
+        }
+    }
+
+    void drawTwoLines(boolean[][] board) {
+        for(int i = 0; i < size;i++) {
+            setCell(board, i, size - 60, true);
+            setCell(board, i, size - 40, true);
+        } 
+    }
+
+    void drawX(boolean[][] board){
+        for(int i = 1; i <= size; i++) {
+            setCell(board, i, i, true);
+            setCell(board, i, size-i, true);
+        }
+    }
+ 
     public void mouseDragged()
     {
         // This method gets called automatically when the mouse is dragged across the screen
