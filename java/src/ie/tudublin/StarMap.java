@@ -51,16 +51,22 @@ public class StarMap extends PApplet {
     public void mouseClicked()
     {
         println("Mouse clicked");
+        
         float border = width * 0.1f;
         for(int i = 0; i < stars.size(); i++) {
             Star s = stars.get(i);
             float x = map(s.getxG(), -5, 5, border, width - border);
             float y = map(s.getyG(), -5, 5, border, height - border);
+            
+
 
             if(dist(mouseX, mouseY, x, y) < s.getAbsMag() / 2)
             {
+                float mX = map(mouseX,  -5, 5, border, width - border);
+                float mY = map(mouseY,  -5, 5, border, height - border);
                 println(s.getDisplayName());
-                break;
+                fill(120);
+                line(x, y, mX, mY);
             }
         }
     }
@@ -73,7 +79,7 @@ public class StarMap extends PApplet {
 
     void drawStars() {
         for(Star s:stars) {
-            s.render(this);
+            s.render(this); //this passes papplet library
         }
     }
 
