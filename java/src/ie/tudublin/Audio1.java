@@ -30,7 +30,7 @@ public class Audio1 extends PApplet {
 
     public void setup() {
         minim = new Minim(this);
-        // ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
+        ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
         ap = minim.loadFile("honey.mp3", width);
         ab = ap.mix; // Connect the buffer to the mp3 file
         ap.play();
@@ -106,7 +106,6 @@ public class Audio1 extends PApplet {
             case 2:
             {
                 for (int i = 0; i < ab.size(); i++) {
-
                     float c = map(i, 0, ab.size(), 0, 255);
                     stroke(c, 255, 255);
                     lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);        
@@ -124,11 +123,24 @@ public class Audio1 extends PApplet {
                 strokeWeight(2);
                 noFill();
                 // See the difference lerping makes? It smooths out the jitteryness of average, so the visual looks smoother
-                //ellipse(width / 4, 100, 50 + average * 500, 50 + average * 500);
+                // ellipse(width / 4, 100, 50 + average * 500, 50 + average * 500);
                 ellipse(width / 2, 100, 50 + (lerpedAverage * 500), 50 + (lerpedAverage * 500));                
                 break;
             }
-            case 4:
+            // case 4:
+            // {
+            //     float c = map(average, 0, 1, 0, 255);
+            //     stroke(c, 255, 255);        
+            //     strokeWeight(2);
+            //     noFill();
+            //     rectMode(CENTER);
+            //     float size = 50 + (lerpedAverage * 500);
+            //     rect(width / 2, height / 2, size, size);
+            //     break;
+            // }
+
+            //cool rectangles
+            case 4: 
             {
                 float c = map(average, 0, 1, 0, 255);
                 stroke(c, 255, 255);        
@@ -136,9 +148,13 @@ public class Audio1 extends PApplet {
                 noFill();
                 rectMode(CENTER);
                 float size = 50 + (lerpedAverage * 500);
-                rect(width / 2, height / 2, size, size);
+                float smallSize = 2- + (lerpedAverage * 500);
+                rect(500, 500, size * 4, size);
+                rect(500, 500, size * 3, smallSize);
                 break;
             }
+
+            //rainfall
             case 5:
             {
                 for (int i = 0; i < ab.size(); i++) {
@@ -150,8 +166,6 @@ public class Audio1 extends PApplet {
                     line(i, halfHeight - lerpedBuffer[i] * halfHeight * 4, halfHeight + lerpedBuffer[i] * halfHeight * 4, i);
                 }     
                 
-                
-
                 for(int i = 0; i < drops.length; i++) {
                     drops[i].fall();
                     drops[i].render(this);
@@ -160,6 +174,7 @@ public class Audio1 extends PApplet {
                 break;
 
             }
+            
             
         }        
     }
