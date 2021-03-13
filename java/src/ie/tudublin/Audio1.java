@@ -16,8 +16,8 @@ public class Audio1 extends PApplet {
     float[] lerpedBuffer;
 
     public void settings() {
-        size(512, 512);
-        // fullScreen(P3D, SPAN); // Try this for full screen multiple monitor support :-) Be careful of exceptions!
+        // size(512, 512);
+        fullScreen(P3D, SPAN); // Try this for full screen multiple monitor support :-) Be careful of exceptions!
     }
 
     float y = 200;
@@ -25,16 +25,24 @@ public class Audio1 extends PApplet {
 
     int which = 0;
 
+    Drop d;
+    Drop[] drops = new Drop[1000];
+
     public void setup() {
         minim = new Minim(this);
         // ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
-        ap = minim.loadFile("heroplanet.mp3", width);
+        ap = minim.loadFile("honey.mp3", width);
         ab = ap.mix; // Connect the buffer to the mp3 file
+        ap.play();
         // ab = ai.mix; 
         colorMode(HSB);
         lerpedBuffer = new float[width];
-
+        for(int i = 0; i < drops.length; i++) {
+            drops[i] = new Drop(this.width, this.height);
+        }
     }
+
+    
 
     public void keyPressed() {
         if (keyCode >= '0' && keyCode <= '5') {
@@ -133,26 +141,26 @@ public class Audio1 extends PApplet {
             }
             case 5:
             {
-                float r = 1f;
-                int numPoints = 3;
-                float thetaInc = TWO_PI / (float) numPoints;
-                strokeWeight(2);                
-                float lastX = width / 2, lastY = height / 2;
-                for(int i = 0 ; i < 1000 ; i ++)
-                {
-                    float c = map(i, 0, 300, 0, 255) % 255.0f;
-                    stroke(c, 255, 255, 100);
-                    float theta = i * (thetaInc + lerpedAverage * 5);
-                    float x = width / 2 + sin(theta) * r;
-                    float y = height / 2 - cos(theta) * r;
-                    r += 0.5f + lerpedAverage;
-                    line(lastX, lastY, x, y);
-                    lastX = x;
-                    lastY = y;
+                for (int i = 0; i < ab.size(); i++) {
+
+                    float c = map(i, 0, ab.size(), 0, 255);
+                    stroke(c, 255, 255);
+                    lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);
+        
+                    line(i, halfHeight - lerpedBuffer[i] * halfHeight * 4, halfHeight + lerpedBuffer[i] * halfHeight * 4, i);
+                }     
+                
+                
+
+                for(int i = 0; i < drops.length; i++) {
+                    drops[i].fall();
+                    drops[i].render(this);
                 }
-                // ??
+
                 break;
+
             }
+            
         }        
     }
 }
