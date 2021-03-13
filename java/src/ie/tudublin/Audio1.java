@@ -26,7 +26,7 @@ public class Audio1 extends PApplet {
     {
         minim = new Minim(this);
         ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
-        ap = minim.loadFile("heroplanet.mp3", width);
+        ap = minim.loadFile("12World.mp3", width);
         ab = ap.mix; // mp3 file
         ap.play();
         // ab = ai.mix; // microphone
@@ -60,8 +60,13 @@ public class Audio1 extends PApplet {
         lerpedAverage = lerp(lerpedAverage, average, 0.1f);
         fill(0);
         strokeWeight(2);
-        stroke(30, 255, 255);
-        ellipse(width, 10, 20 + (lerpedAverage * 500), 20 + (lerpedAverage * 500));
+
+        // float cgap = 255 / (float) mouseX;
+        // for(int i =0; i < 20; i++) {
+        //     fill(cgap * i, 255, 255);
+        //     ellipse(400, 10, 20 + (lerpedAverage * 500), 20 + (lerpedAverage * 500));
+        // }
+        
 
 
         // ellipse(300, lerpedY, 30, 30);
