@@ -1,10 +1,13 @@
 package ie.tudublin;
 
+import java.util.Random;
+
 import ddf.minim.AudioBuffer;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
 import ddf.minim.Minim;
 import processing.core.PApplet;
+import processing.core.PFont;
 
 public class Audio1 extends PApplet {
 
@@ -17,18 +20,21 @@ public class Audio1 extends PApplet {
 
     public void settings() {
         // size(512, 512);
-        fullScreen(P3D, SPAN); // Try this for full screen multiple monitor support :-) Be careful of exceptions!
+        fullScreen(P3D, 2); // Try this for full screen multiple monitor support :-) Be careful of exceptions!
     }
 
     float y = 200;
     float lerpedY = y;
+    Random ran;
+
 
     int which = 0;
-
+    PFont mono;
     Drop d;
-    Drop[] drops = new Drop[1000];
+    Drop[] drops = new Drop[200];
 
     public void setup() {
+        ran = new Random();
         minim = new Minim(this);
         ai = minim.getLineIn(Minim.MONO, width, 44100, 16);
         ap = minim.loadFile("honey.mp3", width);
@@ -40,6 +46,7 @@ public class Audio1 extends PApplet {
         for(int i = 0; i < drops.length; i++) {
             drops[i] = new Drop(this.width, this.height);
         }
+        mono = createFont("honey.ttf", 32);
     }
 
     
@@ -154,17 +161,26 @@ public class Audio1 extends PApplet {
                 break;
             }
 
+            
             //rainfall
             case 5:
             {
-                for (int i = 0; i < ab.size(); i++) {
+                // for (int i = 0; i < ab.size(); i++) {
 
-                    float c = map(i, 0, ab.size(), 0, 255);
-                    stroke(c, 255, 255);
-                    lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);
+                //     // float c = map(i, 0, ab.size(), 0, 255);
+                //     stroke(20, 255, 255);
+                //     lerpedBuffer[i] = lerp(lerpedBuffer[i], ab.get(i), 0.1f);
         
-                    line(i, halfHeight - lerpedBuffer[i] * halfHeight * 4, halfHeight + lerpedBuffer[i] * halfHeight * 4, i);
-                }     
+                //     line(i, halfHeight - lerpedBuffer[i] * halfHeight * 4, halfHeight + lerpedBuffer[i] * halfHeight * 4, i);
+                // }  
+
+                colorMode(HSB);       
+                fill(100, 255, 255);
+                noStroke();
+                // See the difference lerping makes? It smooths out the jitteryness of average, so the visual looks smoother
+                // ellipse(width / 4, 100, 50 + average * 500, 50 + average * 500);
+                ellipse(width / 2, height /2, 200 + (lerpedAverage * 500), 200 + (lerpedAverage * 500));
+                colorMode(HSB);
                 
                 for(int i = 0; i < drops.length; i++) {
                     drops[i].fall();
