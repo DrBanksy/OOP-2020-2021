@@ -16,8 +16,8 @@ public class Audio1 extends PApplet {
     float[] lerpedBuffer;
 
     public void settings() {
-        //size(512, 512, P3D);
-        fullScreen(P3D, SPAN); // Try this for full screen multiple monitor support :-) Be careful of exceptions!
+        size(1000, 1000, P3D);
+        // fullScreen(P3D, SPAN); // Try this for full screen multiple monitor support :-) Be careful of exceptions!
     }
 
     float y = 200;
@@ -38,7 +38,7 @@ public class Audio1 extends PApplet {
     }
 
     public void keyPressed() {
-        if (keyCode >= '0' && keyCode <= '5') {
+        if (keyCode >= '0' && keyCode <= '6') {
             which = keyCode - '0';
         }
         if (keyCode == ' ') {
@@ -49,9 +49,15 @@ public class Audio1 extends PApplet {
                 ap.play();
             }
         }
+        if(keyCode == UP) {
+            twoCubes = !twoCubes;
+        }
     }
 
+    private boolean twoCubes = false;
+
     float lerpedAverage = 0;
+    private float angle = 0;
 
     public void draw() {
         background(0);
@@ -153,6 +159,39 @@ public class Audio1 extends PApplet {
                 }
                 // ??
                 break;
+            }
+            case 6 :
+            {
+                
+                lights();
+                noFill();
+                strokeWeight(3);
+                float c = map(lerpedAverage, 0, 1, 0, 255);
+                stroke(c, 255, 255);
+                // fill(100, 255, 255);
+                angle += 0.01f;
+                float s = 100 + (100 * lerpedAverage*10);
+                if(! twoCubes) {
+                    translate(width/ 2, height /2, 0);
+                    rotateY(angle);
+                    rotateX(angle);
+                    box(s);
+                } else {
+                    pushMatrix();
+                    popMatrix();
+                    translate(width/ 0.75f, height /2, 0);
+                    rotateY(angle);
+                    rotateX(angle);
+                    box(s);
+
+                    pushMatrix();
+                    popMatrix();
+                    translate(width/ 0.75f, height /2, 0);
+                    rotateY(angle);
+                    rotateX(angle);
+                    box(s);
+                }
+                
             }
         }        
     }
