@@ -113,35 +113,36 @@ public class Main
         String c = s.substring(34);
         System.out.println(a);
         System.out.println(b);
+        System.out.println(c);
 
-        if (s.startsWith("I may"))
-        {
+        if(s.startsWith("I may")) {
             System.out.println("Starts with I may");
         }
-        if (s.endsWith("weird"))
-        {
+        if(s.endsWith("weird")) {
             System.out.println("Ends with weird");
         }
         System.out.println(s.toUpperCase());
 
+        // gets index of the start of the word
         int hungryIndex = s.indexOf("hungry");
         System.out.println(hungryIndex);
 
+        //gets first occurence of e starting from the end
         int weirdIndex = s.lastIndexOf("e");
         System.out.println(weirdIndex);
 
+        // splitting a string
         String[] words = s.split(" ");
-
-        for(String ss: words)
-        {
-            System.out.println(ss);
+        for(String word: words) {
+            System.out.print(word);
         }
+        System.out.println();
 
-        for(int i = s.length() - 1; i >= 0; i--)
-        {
-            System.out.println(s.substring(i, i + 1));
+        //reversing a string
+        for(int i = s.length() - 1; i >= 0; i--) {
+            System.out.print(s.substring(i, i + 1));
+            System.out.print(" ");
         }
-
     }
 
     public static void main(String[] args)
